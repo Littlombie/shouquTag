@@ -38,14 +38,15 @@ list.each(function() {
 console.log(arr);
 ```
 #### 直接输出文件
-此方法比较傻瓜式，直接打开页面登录用户，然后打开控制台，复制下边代码，页面会自动滑动到最底端（拉取全部数据），
-然后会自动执行输出一个json文件，打开文件格式化内容即可。
+此方法比较傻瓜，直接打开页面登录用户，然后打开控制台，复制下边代码，  
+页面会自动滑动到最底端（拉取全部数据）， 然后会自动执行输出一个json文件，打开文件格式化内容即可。  
+也可以直接设置格式化处理 `JSON.stringify(getData(), null, '\t'))`, 那么导出的文件无需格式化，文件内存也会相应大一些
 ``` javascript
   scroll();
   // 获取总数
-  const total = userInfo.markCount;
-  let times = null;
-  let nowDate = getFormatDate()
+  var total = userInfo.markCount;
+  var times = null;
+  var nowDate = getFormatDate()
 
   function scroll() {
     console.log('key', window.arrKey, total);
@@ -63,7 +64,7 @@ console.log(arr);
  
   // downloadUserData()
   function downloadUserData() {
-    exportRaw(`收趣书签-${nowDate}.json`, JSON.stringify(getData()));
+    exportRaw(`收趣书签-${nowDate}.json`, JSON.stringify(getData(), null, '\t'));
   }
 
   function fakeClick(obj) {

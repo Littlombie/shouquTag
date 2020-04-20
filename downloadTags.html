@@ -15,79 +15,78 @@
      document.querySelector('#download-user-data').addEventListener('click', downloadUserData);
  
  
-    scroll();
-     // 获取总数
-     var total = userInfo.markCount;
-     var times = null;
+     scroll();
+    // 获取总数
+    var total = userInfo.markCount;
+    var times = null;
+    var nowDate = getFormatDate()
 
-    let nowDate = getFormatDate()
- 
-     function scroll() {
-       console.log('key', window.arrKey, total);
-       bodys = document.body.scrollHeight + 100;
-       if (window.arrKey == total) {
-         clearTimeout(times);
-         downloadUserData()
-       } else {
-         times = window.scrollTo(0, bodys);
-         setTimeout(() => {
-           scroll();
-         }, 30)
-       }
-     }
- 
-     // downloadUserData()
-     function downloadUserData() {
-       exportRaw(`收趣书签-${nowDate}.json`, JSON.stringify(getData()));
-     }
- 
-     function fakeClick(obj) {
-       let ev = document.createEvent('MouseEvents');
-       ev.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, 0, null);
-       obj.dispatchEvent(ev);
-     }
- 
-     function exportRaw(name, data) {
-       let urlObject = window.URL || window.webkitUrl || window;
-       let export_blob = new Blob([data]);
-       let save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
-       save_link.href = urlObject.createObjectURL(export_blob);
-       save_link.download = name;
-       fakeClick(save_link);
-     }
- 
-     function getData() {
-       var list = document.querySelectorAll('.cardFixedHeight');
- 
-       var arr = [];
-       Array.prototype.slice.call(list).forEach(ele => {
-         let item = ele.innerHTML;
-         let tag = ele.querySelector('div[categoryids]').innerText;
-         let dataTime = ele.querySelector('.date').innerText;
-         let alink = ele.querySelector('.bookmarkLink').getAttribute('href');
-         let name = ele.querySelector('.bookmarkTitle').innerText;
-         let bookmarkView = ele.querySelector('.bookmarkView').innerHTML;
-         arr.push({
-           tag,
-           dataTime,
-           alink,
-           name,
-           bookmarkView
-         })
-       })
-       return arr;
-     }
+    function scroll() {
+      console.log('key', window.arrKey, total);
+      bodys = document.body.scrollHeight + 100;
+      if (window.arrKey == total) {
+        clearTimeout(times);
+        downloadUserData()
+      } else {
+        times = window.scrollTo(0, bodys);
+        setTimeout(() => {
+          scroll();
+        }, 30)
+      }
+    }
+  
+    // downloadUserData()
+    function downloadUserData() {
+      exportRaw(`收趣书签-${nowDate}.json`, JSON.stringify(getData(), null, '\t'));
+    }
+
+    function fakeClick(obj) {
+      let ev = document.createEvent('MouseEvents');
+      ev.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, 0, null);
+      obj.dispatchEvent(ev);
+    }
+
+    function exportRaw(name, data) {
+      let urlObject = window.URL || window.webkitUrl || window;
+      let export_blob = new Blob([data]);
+      let save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+      save_link.href = urlObject.createObjectURL(export_blob);
+      save_link.download = name;
+      fakeClick(save_link);
+    }
+
+    function getData() {
+      var list = document.querySelectorAll('.cardFixedHeight');
+
+      var arr = [];
+      Array.prototype.slice.call(list).forEach(ele => {
+        let item = ele.innerHTML;
+        let tag = ele.querySelector('div[categoryids]').innerText;
+        let dataTime = ele.querySelector('.date').innerText;
+        let alink = ele.querySelector('.bookmarkLink').getAttribute('href');
+        let name = ele.querySelector('.bookmarkTitle').innerText;
+        let bookmarkView = ele.querySelector('.bookmarkView').innerHTML;
+        arr.push({
+          tag,
+          dataTime,
+          alink,
+          name,
+          bookmarkView
+        })
+      })
+      return arr;
+    }
 
     function getFormatDate() {
       /**  
-       * 日期格式化（原型扩展或重载）  
-       * 格式 YYYY/yyyy/ 表示年份  
-       * MM/M 月份  
-       * dd/DD/d/D 日期  
-       * @param {formatStr} 格式模版  
-       * @type string  
-       * @returns 日期字符串  
-       */  
+        * 日期格式化（原型扩展或重载）  
+        * 格式 YYYY/yyyy/ 表示年份  
+        * MM/M 月份  
+        * dd/DD/d/D 日期  
+        * @param {formatStr} 格式模版  
+        * @type string  
+        * @returns 日期字符串  
+        */  
       Date.prototype.format = function(formatStr){   
               var str = formatStr;   
               var Week = ['日','一','二','三','四','五','六'];   

@@ -54,19 +54,21 @@
       save_link.download = name;
       fakeClick(save_link);
     }
-
+    
     function getData() {
       var list = document.querySelectorAll('.cardFixedHeight');
 
       var arr = [];
-      Array.prototype.slice.call(list).forEach(ele => {
+      Array.prototype.slice.call(list).forEach((ele, index) => {
         let item = ele.innerHTML;
         let tag = ele.querySelector('div[categoryids]').innerText;
         let dataTime = ele.querySelector('.date').innerText;
         let alink = ele.querySelector('.bookmarkLink').getAttribute('href');
         let name = ele.querySelector('.bookmarkTitle').innerText;
         let bookmarkView = ele.querySelector('.bookmarkView').innerHTML;
+        let id = index;
         arr.push({
+          id,
           tag,
           dataTime,
           alink,

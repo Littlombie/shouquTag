@@ -58,7 +58,7 @@ console.log(arr);
       times = window.scrollTo(0, bodys);
       setTimeout(() => {
         scroll();
-      }, 30)
+      }, 100)
     }
   }
  
@@ -87,20 +87,24 @@ console.log(arr);
 
     var arr = [];
     Array.prototype.slice.call(list).forEach((ele, index) => {
+      let id = index;
       let item = ele.innerHTML;
       let tag = ele.querySelector('div[categoryids]').innerText;
       let dataTime = ele.querySelector('.date').innerText;
       let alink = ele.querySelector('.bookmarkLink').getAttribute('href');
       let name = ele.querySelector('.bookmarkTitle').innerText;
       let bookmarkView = ele.querySelector('.bookmarkView').innerHTML;
-      let id = index;
+      let sourceLog = ele.querySelector('.sourceLog')?.getAttribute('src') || null;
+      let sourceName = ele.querySelector('.sourceName').innerText;
       arr.push({
         id,
         tag,
         dataTime,
         alink,
         name,
-        bookmarkView
+        bookmarkView,
+        sourceLog,
+        sourceName
       })
     })
     return arr;

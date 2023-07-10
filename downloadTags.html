@@ -15,7 +15,7 @@
      document.querySelector('#download-user-data').addEventListener('click', downloadUserData);
  
  
-     scroll();
+    scroll();
     // 获取总数
     var total = userInfo.markCount;
     var times = null;
@@ -60,7 +60,7 @@
 
       var arr = [];
       Array.prototype.slice.call(list).forEach((ele, index) => {
-      let id = index;
+      // let id = index;
       let item = ele.innerHTML;
       let tag = ele.querySelector('div[categoryids]').innerText;
       let dataTime = ele.querySelector('.date').innerText;
@@ -70,7 +70,7 @@
       let sourceLog = ele.querySelector('.sourceLog')?.getAttribute('src') || null;
       let sourceName = ele.querySelector('.sourceName').innerText;
         arr.push({
-          id,
+          id: total - index -1,
           tag,
           dataTime,
           alink,
@@ -78,6 +78,7 @@
           bookmarkView
         })
       })
+
       return arr;
     }
 
